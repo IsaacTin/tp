@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
@@ -23,16 +24,28 @@ public class DeleteCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s\n"
+            + "Type in 'list' to view updated list of staff!";
+
+    public static final String MESSAGE_PERSON_NOT_FOUND = "There is no staff with the name(s) you are searching for."
+            + " Please try again.";
 
     private final Index targetIndex;
     private final NameContainsKeywordsPredicate targetName;
 
+    /**
+     * Creates DeleteCommand object when deleting person.
+     * @param targetIndex index of person to delete
+     */
     public DeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
         this.targetName = null;
     }
 
+    /**
+     * Creates DeleteCommand object when searching for person to delete.
+     * @param name people being searched for to be deleted.
+     */
     public DeleteCommand(NameContainsKeywordsPredicate name) {
         this.targetName = name;
         this.targetIndex = null;
@@ -54,6 +67,15 @@ public class DeleteCommand extends Command {
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
         } else {
             model.updateFilteredPersonList(this.targetName);
+            if (model.getFilteredPersonList().size() == 0) {
+                model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+                return new CommandResult(
+                        String.format(MESSAGE_PERSON_NOT_FOUND)
+                );
+            }
+            return new CommandResult(
+                    String.format(Messages.DELETE_MESSAGE_PERSONS_LISTED_OVERVIEW,
+                            model.getFilteredPersonList().size()));
         }
     }
 

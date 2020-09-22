@@ -36,7 +36,10 @@ public class SampleDataUtil {
                 getTagSet("classmates")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                 new Address("Blk 45 Aljunied Street 85, #11-31"),
-                getTagSet("colleagues"))
+                getTagSet("colleagues")),
+            new Person(new Name("David Lo"), new Phone("91031282"), new Email("lidavid@example.com"),
+                new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
+                getTagSet("family")),
         };
     }
 
