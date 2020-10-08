@@ -23,6 +23,7 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private Comments comments = new Comments();
 
     /**
      * Every field must be present and not null.
@@ -50,6 +51,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Comments getComments() {
+        return comments;
     }
 
     /**

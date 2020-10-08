@@ -122,4 +122,22 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    public static String[] parseComment(String details) throws ParseException {
+        requireNonNull(details);
+        String[] arrayOfDetails = new String[2];
+        if (details.startsWith("-a")) {
+            arrayOfDetails[0] = "add";
+            arrayOfDetails[1] = details.substring(2);
+        } else if (details.startsWith("-d")) {
+            arrayOfDetails[0] = "delete";
+            arrayOfDetails[1] = details.substring(2);
+        } else if (details.startsWith("-v")) {
+            arrayOfDetails[0] = "view";
+            arrayOfDetails[1] = details.substring(2);
+        } else {
+            throw new ParseException("Invalid input at comment");
+        }
+        return arrayOfDetails;
+    }
 }
